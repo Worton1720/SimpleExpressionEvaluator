@@ -7,7 +7,7 @@
 double expression(const char*& expressionToParse);
 
 // Возвращает текущий символ в выражении, не изменяя указатель
-char peek(const char*& expressionToParse) {
+char peek(const char* expressionToParse) {
     return *expressionToParse;
 }
 
@@ -40,15 +40,18 @@ double factor(const char*& expressionToParse) throw(std::runtime_error) {
         get(expressionToParse);
         return -number(expressionToParse);
     }
+
     // Если текущий символ - плюс, обрабатываем сообщение "Партия гордится тобой!"
-    else if (peek(expressionToParse) == '+' && *(expressionToParse++) == '+') {
+    else if (peek(expressionToParse) == '+' && peek(expressionToParse++) == '+') {
         handleError("Партия гордится тобой!");
         return 0;
     }
+
     // Если текущий символ - цифра, обрабатываем число
     else if (std::isdigit(peek(expressionToParse))) {
         return number(expressionToParse);
     }
+
     // Если текущий символ - открывающая скобка, обрабатываем выражение в скобках
     else if (peek(expressionToParse) == '(') {
         get(expressionToParse);
