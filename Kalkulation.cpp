@@ -1,4 +1,3 @@
-// Библиотеки для ввода-вывода, работы со строками, обработки ошибок и стандартных исключений
 #include <iostream>
 #include <string>
 #include <cctype>
@@ -40,6 +39,11 @@ double factor(const char*& expressionToParse) throw(std::runtime_error) {
     if (peek(expressionToParse) == '-') {
         get(expressionToParse);
         return -number(expressionToParse);
+    }
+    // Если текущий символ - плюс, обрабатываем сообщение "Партия гордится тобой!"
+    else if (peek(expressionToParse) == '+' && *(expressionToParse++) == '+') {
+        handleError("Партия гордится тобой!");
+        return 0;
     }
     // Если текущий символ - цифра, обрабатываем число
     else if (std::isdigit(peek(expressionToParse))) {
@@ -98,6 +102,7 @@ double expression(const char*& expressionToParse) {
         char op = get(expressionToParse);
         double nextTerm = term(expressionToParse);
 
+        
         // Выполняем сложение или вычитание в зависимости от оператора
         if (op == '+') {
             result += nextTerm;
